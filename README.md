@@ -8,12 +8,10 @@ An end-to-end data platform for extracting, transforming, enriching, and serving
 
 This project enables:
 
-- Scraping Telegram channels for messages and images (via `scripts/scraper.py`)
-- Storing raw data (JSON, images) in `data/raw/telegram_messages/`
-- Loading and transforming data into PostgreSQL using dbt (`scripts/json_to_postgres.py`, `dbt/telegram_dbt/`)
-- Enriching image data with YOLOv8 object detection (`yolo_detection/`)
-- Serving analytics via a FastAPI backend (`fastapi_app/`)
-- Orchestrating the workflow with Dagster (`dags/`)
+- Scraping Telegram channels for messages and images (via `src/scraper.py`)
+- Storing raw data (JSON, images) in `data/`
+- Loading and transforming data into PostgreSQL using dbt (`src/json_to_postgres.py`, `dbt/medical_warehouse/`)
+- Serving analytics via a FastAPI backend (`api/`)
 
 ---
 
@@ -44,20 +42,16 @@ telegram-medical-insights/
 3. **Start services:**
    - `docker-compose up -d` (PostgreSQL, etc.)
 4. **Scrape Telegram data:**
-   - `python scripts/scraper.py` (collects messages & images)
+   - `python src/scraper.py` (collects messages & images)
 5. **Load data into PostgreSQL:**
-   - `python scripts/json_to_postgres.py`
+   - `python src/json_to_postgres.py`
 6. **Run dbt transformations:**
-   - `cd dbt/telegram_dbt`
+   - `cd dbt/medical_warehouse`
    - `dbt run` (builds models)
    - `dbt test` (runs data quality tests)
    - `dbt docs generate && dbt docs serve` (view model docs/lineage)
-7. **Enrich images with YOLOv8:**
-   - See `yolo_detection/` for scripts and instructions
-8. **Start FastAPI analytics server:**
-   - See `fastapi_app/` for API endpoints
-9. **Orchestrate with Dagster:**
-   - See `dags/` for pipeline automation
+7. **Start FastAPI analytics server:**
+   - Implement and run the API from `api/` directory
 
 ---
 
@@ -67,9 +61,7 @@ telegram-medical-insights/
 - PostgreSQL
 - dbt (Data Build Tool)
 - Telethon (Telegram API)
-- YOLOv8 (Ultralytics)
 - FastAPI (API backend)
-- Dagster (Orchestration)
 - Docker & Docker Compose
 
 ---
