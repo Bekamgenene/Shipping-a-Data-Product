@@ -1,6 +1,41 @@
 version: 2
 
 models:
+  - name: stg_telegram_messages
+    description: Staging model for Telegram messages
+    columns:
+      - name: message_id
+        tests:
+          - unique
+          - not_null
+      - name: channel
+        tests:
+          - not_null
+
+  - name: dim_channels
+    description: Dimension table for Telegram channels
+    columns:
+      - name: channel_key
+        tests:
+          - unique
+          - not_null
+      - name: channel_name
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_dates
+    description: Dimension table for dates
+    columns:
+      - name: date_key
+        tests:
+          - unique
+          - not_null
+      - name: date
+        tests:
+          - unique
+          - not_null
+
   - name: fct_messages
     description: Fact table of Telegram messages
     columns:
@@ -8,3 +43,15 @@ models:
         tests:
           - not_null
           - unique
+      - name: channel_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_channels')
+              field: channel_key
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
