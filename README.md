@@ -142,6 +142,14 @@ Use Jupyter notebooks in `notebooks/` for:
 
 ---
 
+## 🚀 CI & API Improvements
+
+- New FastAPI endpoint: `/api/reports/visual-content` — returns image detection rows joined to message context and supports `?csv=true` to download results as CSV.
+- dbt seed `image_categories.csv` added to map `object_class` values to a higher-level `image_category`.
+- GitHub Actions CI workflow added at `.github/workflows/ci.yml` to run tests and lint on push/PR. A conditional dbt build step is included and will run when `DBT_CONN` secrets are available in the repository settings.
+
+See `docs/detections_joining.md` for details on joining detections back to messages in the warehouse.
+
 ## 🔐 Notes
 
 - Keep your `.env` file secure and never push it to GitHub!

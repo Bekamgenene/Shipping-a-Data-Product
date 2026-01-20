@@ -47,3 +47,23 @@ def search_messages(db: Session, query_string: str):
         LIMIT 50
     """)
     return db.execute(query, {"query": f"%{query_string}%"}).fetchall()
+
+
+def get_visual_content_report(db: Session, channel: str = None, limit: int = 100):
+    # Returns detections joined (left) to messages so users can see context
+    query = text("""
+        SELECT
+            d.id AS detection_id,
+            d.message_id,
+            d.object_class,
+            d.confidence,
+            m.message,
+            m.channel,
+            m.date
+        FROM analytics.fct_image_detections d
+        LEFT JOIN analytics.fct_messages m ON d.message_id = m.message_id
+        WHERE (:channel IS NULL OR m.channel = :channel)
+        ORDER BY m.date DESC NULLS LAST
+        LIMIT :limit
+    """)
+    return db.execute(query, {"channel": channel, "limit": limit}).fetchall()

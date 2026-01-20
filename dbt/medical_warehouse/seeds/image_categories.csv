@@ -1,0 +1,12 @@
+object_class,image_category
+person,person
+human,person
+pill,medication
+tablet,medication
+capsule,medication
+bottle,container
+box,packaging
+label,packaging
+syringe,medical_device
+bandage,medical_supply
+other,other
