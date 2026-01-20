@@ -23,3 +23,13 @@ class SearchResult(BaseModel):
     message_id: int
     message: str
     channel: str
+
+
+class VisualContentRow(BaseModel):
+    detection_id: int
+    message_id: int
+    object_class: str
+    confidence: float
+    message: Optional[str]
+    channel: Optional[str]
+    date: Optional[str]
